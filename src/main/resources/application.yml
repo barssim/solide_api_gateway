@@ -31,4 +31,13 @@ spring:
           uri: http://localhost:8090
           predicates:
             - Path=/articles/**
+            
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always
     
