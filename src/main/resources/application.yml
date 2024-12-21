@@ -19,6 +19,10 @@ spring:
               - "*" # Allow all headers
             allowCredentials: true # Allow cookies if required
       routes:
+        - id: auth-service
+          uri: http://localhost:8091
+          predicates:
+            - Path=/api/auth/**
         - id: user-service
           uri: http://localhost:8091
           predicates:
