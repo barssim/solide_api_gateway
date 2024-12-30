@@ -6,14 +6,14 @@
 	<groupId>ma.solide</groupId>
 	<artifactId>solide_api_gateway</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
 	<name>solide_api_gateway</name>
 	<description>serves as the entry point to our microservices architecture</description>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.1.5</version> <!-- Update to match your Spring Boot version -->
-		<relativePath /> <!-- lookup parent from repository -->
+		<version>3.1.0</version> <!-- Update to match your Spring Boot version -->
 	</parent>
 
 	<properties>
@@ -28,7 +28,10 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-gateway</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
 
 	</dependencies>
 
@@ -61,17 +64,18 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
 			<plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-jar-plugin</artifactId>
-            <version>3.3.0</version>
-            <configuration>
-                <archive>
-                    <manifest>
-                        <mainClass>ma.solide.solide_api_gateway.SolideApiGatewayApplication</mainClass>
-                    </manifest>
-                </archive>
-            </configuration>
-        </plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.3.0</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>
+								ma.solide.solide_api_gateway.SolideApiGatewayApplication</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 </project>
