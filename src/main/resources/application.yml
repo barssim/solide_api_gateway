@@ -1,40 +1,49 @@
 server:
   port: 8085
+  address: 0.0.0.0
 
 spring:
+  profiles:
+    active: prod   # change to production
+
   main:
-   web-application-type: reactive
-  
+    web-application-type: reactive
+
   cloud:
     gateway:
+
       globalcors:
         corsConfigurations:
-          '[/**]':  # Apply CORS settings to all paths
+          '[/**]':
             allowedOrigins:
-              - "http://localhost:3000" # Your frontend's origin
-            allowedMethods:
-              - GET
-              - POST
-              - PUT
-              - DELETE
-              - OPTIONS
-            allowedHeaders:
-              - "*" # Allow all headers
-            allowCredentials: true # Allow cookies if required
-      routes:        
-        - id: user-service
-          uri: http://localhost:8091
+              - "http://localhost:80"
+              - "http://ecole-portal-prod"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+            allowCredentials: true
+
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials, RETAIN_UNIQUE
+
+      httpclient:
+        wiretap: false  # disable wiretap in prod
+
+      routes:
+
+        - id: usermanagement
+          uri: "http://usermanagement:8091"
           predicates:
             - Path=/api/auth/**
-        - id: order-service
-          uri: http://localhost:8092
+          filters:
+            - StripPrefix=1
+
+        - id: finance-manager
+          uri: "http://finance-manager:8094"
           predicates:
-            - Path=/orders/**
-        - id: article-service
-          uri: http://localhost:8090
-          predicates:
-            - Path=/articles/**
-            
+            - Path=/api/facture/**
+          filters:
+            - StripPrefix=1
+
 management:
   endpoints:
     web:
@@ -43,4 +52,3 @@ management:
   endpoint:
     health:
       show-details: always
-    

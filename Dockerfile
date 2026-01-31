@@ -10,6 +10,5 @@ COPY ${WAR_FILE} app.war
 
 # Expose the default Spring Boot port
 EXPOSE 8085
-
 # Run the application
 ENTRYPOINT ["java", "-jar", "app.war"]
